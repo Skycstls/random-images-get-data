@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./initdb');
 const app = express();
+const PORT = 80;
 app.use(express.static('public'));
 
 function geoIP(ip) {
@@ -46,6 +47,6 @@ app.get('/usuarios', (req, res) => {
     res.json(usuarios);
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('Server is running on port 3000');
 })
