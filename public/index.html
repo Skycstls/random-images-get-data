@@ -1,0 +1,55 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recopilación de Datos del Cliente</title>
+</head>
+<body>
+    <h1>Recopilación de Datos del Cliente</h1>
+    <p>Esta página recopila información del cliente cada 20 segundos.</p>
+    <img src="1.jpeg" alt="">
+    <button>Haz click</button>
+    <h2>Otro elemento html</h2>
+    <script>
+        let mouseData = [];
+
+        document.addEventListener('mousemove', (event) => {
+            mouseData.push({
+                x: event.clientX,
+                y: event.clientY,
+                element: event.target.tagName,
+                timestamp: Date.now()
+            });
+        });
+
+        function sendData() {
+            const data = {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                cookiesEnabled: navigator.cookieEnabled,
+                screenWidth: screen.width,
+                screenHeight: screen.height,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                mouseData: mouseData
+            };
+
+            fetch('/collect', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Datos enviados correctamente');
+                    mouseData = []; // Limpiar los datos del ratón después de enviarlos
+                } else {
+                    console.error('Error al enviar los datos');
+                }
+            }).catch(error => {
+                console.error('Error de red:', error);
+            });
+        }
+
+        setInterval(sendData, 200); // 20 segundos
+    </script>
+</body>
+</html>

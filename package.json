@@ -12,6 +12,7 @@
   "dependencies": {
     "better-sqlite3": "^11.8.1",
     "express": "^4.21.2",
-    "geoip-lite": "^1.4.10"
+    "geoip-lite": "^1.4.10",
+    "morgan": "^1.10.0"
   }
 }
